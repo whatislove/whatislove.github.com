@@ -9,7 +9,11 @@
   <meta name="author" content="悠游的叶">
 
   
-  <meta name="description" content=" Blog Archives Recent Posts 新浪微博 ">
+  <meta name="description" content="1.安装Ruby curl -L https://get.rvm.io | bash -s stable --ruby
+Install Ruby 1.9.3
+rvm install 1.9.3
+rvm use 1.9.3
+rvm rubygems latest 如果出现红色缺少的类库，请sudo &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +70,84 @@
       <div class="blog-index">
   
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/04/07/octopress-jian-yi-pei-zhi/">Octopress 简易配置</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-07T12:03:00+08:00" pubdate data-updated="true">Apr 7<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>1.安装Ruby</p>
+
+<pre><code>curl -L https://get.rvm.io | bash -s stable --ruby
+Install Ruby 1.9.3
+rvm install 1.9.3
+rvm use 1.9.3
+rvm rubygems latest
+</code></pre>
+
+<p>如果出现红色缺少的类库，请sudo apt-get install 安装</p>
+
+<p>2.设置 Octopress</p>
+
+<pre><code>git clone git://github.com/imathis/octopress.git octopress
+cd octopress
+ruby --version  # Should report Ruby 1.9.3
+gem install bundler
+bundle install
+rake install  #Install the default Octopress theme
+</code></pre>
+
+<p>3.配置github pages</p>
+
+<p>在github新建一个名为&#8221;username.github.com&#8221;的代码仓库</p>
+
+<p><a href="https://help.github.com/articles/generating-ssh-keys">Generating SSH Keys</a></p>
+
+<p>使用脚本部署</p>
+
+<pre><code>rake setup_github_pages #在此过程会询问你的代码仓库的地址，按提示完成即可
+</code></pre>
+
+<p>将默认的博客发布到你自己的域名</p>
+
+<pre><code>rake generate
+rake deploy
+
+rake preview #本机进行预览http://localhost:4000 
+</code></pre>
+
+<p>4.配置Octopress</p>
+
+<p>Octopress的配置主要在_config.yml文件中</p>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
     <a href="/blog/archives">Blog Archives</a>
@@ -77,6 +159,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/04/07/octopress-jian-yi-pei-zhi/">octopress 简易配置</a>
+      </li>
     
   </ul>
 </section>

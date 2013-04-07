@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[悠游的叶的Blog]]></title>
-  <link href="http://whatislove.github.com/atom.xml" rel="self"/>
+  <title><![CDATA[Category: octopress | 悠游的叶的Blog]]></title>
+  <link href="http://whatislove.github.com/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://whatislove.github.com/"/>
   <updated>2013-04-07T12:28:12+08:00</updated>
   <id>http://whatislove.github.com/</id>
@@ -41,7 +41,7 @@ rake install  #Install the default Octopress theme
 
 <p>3.配置github pages</p>
 
-<p>在github新建一个名为&#8221;username.github.com&#8221;的代码仓库</p>
+<p>在github新建一个名为"username.github.com"的代码仓库</p>
 
 <p><a href="https://help.github.com/articles/generating-ssh-keys">Generating SSH Keys</a></p>
 
