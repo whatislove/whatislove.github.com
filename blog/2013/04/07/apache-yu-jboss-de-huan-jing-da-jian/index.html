@@ -1,0 +1,243 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Apache 与Jboss 的环境搭建 - 悠游的叶的Blog</title>
+	<meta name="author" content="悠游的叶">
+
+	
+	<meta name="description" content="1.首先是环境的安装，需要安装 httpd(也就是apache http server http服务器 罗嗦下：Tomcat应用也算非常广泛的web服务器，支持部分j2ee， 只能做jsp和servlet的container) jboss (应用服务器) mod_jk(mod_jk 也叫 JK， &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="悠游的叶的Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">悠游的叶的Blog</a></h1>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:whatislove.github.com">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:whatislove.github.com">
+	</form>
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Apache 与Jboss 的环境搭建</h2>
+	<div class="entry-content"><p>1.首先是环境的安装，需要安装</p>
+
+<p>httpd(也就是apache http server http服务器 罗嗦下：Tomcat应用也算非常广泛的web服务器，支持部分j2ee， 只能做jsp和servlet的container)</p>
+
+<p>jboss (应用服务器)</p>
+
+<p>mod_jk(mod_jk 也叫 JK，这是一款 Apache/IIS 用来连接后台Tomcat的模块，支持集群和负载均衡)</p>
+
+<p>安装 httpd:</p>
+
+<pre><code>wget http://archive.apache.org/dist/httpd/httpd-2.0.61.tar.gz
+tar -zxvf httpd-2.0.61.tar.gz
+</code></pre>
+
+<p>进入httpd-2.0.61,执行安装</p>
+
+<pre><code>$ ./configure –prefix=/usr/alibaba/install/httpd-2.0.61 –enable-rewrite=static –with-mpm=worker –enable-so –enable-proxy –enable-proxy-http –enable-deflate
+$ make
+$ make install
+</code></pre>
+
+<!-- more -->
+
+
+<p>安装 jboss:</p>
+
+<pre><code>wget http://nchc.dl.sourceforge.net/sourceforge/jboss/jboss-4.0.5.GA.zip
+cd /usr/alibaba/install
+unzip ../jboss-4.0.5.GA.zip
+</code></pre>
+
+<p>安装 mod_jk</p>
+
+<pre><code>wget http://archive.apache.org/dist/tomcat/tomcat-connectors/jk/source/jk-1.2.26/tomcat-connectors-1.2.26-src.tar.gz
+tar -zxvf tomcat-connectors-1.2.26-src.tar.gz
+</code></pre>
+
+<p>进入目录,native执行编译</p>
+
+<pre><code>./configure –with-apxs=/usr/alibaba/install/httpd-2.0.61/bin/apxs
+make
+cp apache-2.0/mod_jk.so ../../../install/httpd-2.0.61/modules/
+</code></pre>
+
+<p>2.开始配置httpd,jboss,mod_jk</p>
+
+<p>配置mod_jk:</p>
+
+<p>mod_jk.conf：</p>
+
+<p>主要定义mod_jk模块的位置以及mod_jk模块的连接日志设置，还有定义worker.properties文件的位置。</p>
+
+<p>worker.properties：</p>
+
+<p>定义worker的参数，主要是连接tomcat主机的地址和端口信息。</p>
+
+<p>如果Tomcat与apache不在同一台机器上，或者需要做多台机器上tomcat的负载均衡只需要更改workers.properties文件中的相应定义即可。</p>
+
+<p>建立mod_jk.conf，可以存放在你想存放的目录，通常放置在 apche/conf下</p>
+
+<p>展示下我的配置文件:</p>
+
+<pre><code>JkWorkersFile /usr/env/wwwConf/workers.properties
+JkLogFile /usr/env/logs/mod_jk.log
+# Set the jk log level [debug/error/info]
+JkLogLevel info
+# Select the log format
+JkLogStampFormat ”[%a %b %d %H:%M:%S %Y] ”
+# JkOptions indicate to send SSL KEY SIZE,
+JkOptions +ForwardKeySize +ForwardURICompat -ForwardDirectories
+# JkRequestLogFormat set the request format
+JkRequestLogFormat ”%w %V %T”
+JkMount /*.jsp jspWorker
+</code></pre>
+
+<p>配置workers.properties（存放我要转发的jboss的配置）</p>
+
+<pre><code>worker.list=jspWorker   
+# Set properties for jspWorker   
+
+worker.jspWorker.type=ajp13  
+worker.jspWorker.host=localhost    
+worker.jspWorker.port=8009   
+worker.jspWorker.lbfactor=50    
+worker.jspWorker.cachesize=10   
+worker.jspWorker.cache_timeout=600    
+worker.jspWorker.socket_keepalive=1   
+worker.jspWorker.socket_timeout=300 
+</code></pre>
+
+<p>然后把mod_jk.conf这个配置项配置到apahce/conf/httpd.conf</p>
+
+<pre><code>Include /usr/env/wwwConf/mod_jk.conf
+LoadModule jk_module modules/mod_jk.so
+</code></pre>
+
+<p>这个时候你可以修改端口，默认是80，但是1024之前的端口只有root才可以启动，你可以把它修改为1024之后的
+Listen 8888</p>
+
+<p>配置jboss，你可以修改jboss的ajp13端口</p>
+
+<p>我这就用默认的了，修改的目录在：</p>
+
+<pre><code>jboss-4.2.3.GA/server/default/deploy/jboss-web.deployer/server.xml
+</code></pre>
+
+<p>这个时候你把war包拷贝到jboss-4.2.3.GA/server/default/deploy下你就可以通过apache访问jboss的资源</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-07T13:51:00+08:00" pubdate data-updated="true">Apr 7<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/java/'>java</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    悠游的叶
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>

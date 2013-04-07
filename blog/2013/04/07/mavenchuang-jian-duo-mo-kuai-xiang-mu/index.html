@@ -1,0 +1,216 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>maven创建多模块项目 - 悠游的叶的Blog</title>
+	<meta name="author" content="悠游的叶">
+
+	
+	<meta name="description" content="1.生成父级工程 mvn archetype:create -DgroupId=com.wyb -DartifactId=union -Dversion=1.0 备注： :一个项目群的ID,一个项目群可以包含多个项目 :一个项目的ID,是每个项目的唯一ID. :描述了项目当前的版本. &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="悠游的叶的Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">悠游的叶的Blog</a></h1>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:whatislove.github.com">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:whatislove.github.com">
+	</form>
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Maven创建多模块项目</h2>
+	<div class="entry-content"><p>1.生成父级工程</p>
+
+<pre><code>mvn archetype:create -DgroupId=com.wyb -DartifactId=union -Dversion=1.0
+</code></pre>
+
+<p>备注：</p>
+
+<p><groupId>:一个项目群的ID,一个项目群可以包含多个项目</p>
+
+<p><artifactId>:一个项目的ID,是每个项目的唯一ID.</p>
+
+<p><version>:描述了项目当前的版本.</p>
+
+<p>打开union目录删除src文件夹，打开pom.xml，将packaging属性修改为pom（表示为父工程）</p>
+
+<!-- more -->
+
+
+<p>不然会在建立子工程的时候报：</p>
+
+<pre><code>Embedded error: Unable to add module to the current project as it is not of packaging type ’pom’
+</code></pre>
+
+<p>2.生成子工程：</p>
+
+<pre><code>mvn archetype:create -DgroupId=com.wyb.biz.common -DartifactId=union-biz-common -Dversion=1.0
+mvn archetype:create -DgroupId=com.wyb.biz.srv -DartifactId=union-biz-srv -Dversion=1.0
+mvn archetype:create -DgroupId=com.wyb.biz.sys -DartifactId=union-biz-sys -Dversion=1.0
+mvn archetype:create -DgroupId=com.wyb.bundle.war -DartifactId=union-bundle-war -Dversion=1.0
+mvn archetype:create -DgroupId=com.wyb.common -DartifactId=union-common -Dversion=1.0  mvn archetype:create -DgroupId=com.wyb.commontest -DartifactId=union-commontest -Dversion=1.0
+mvn archetype:create -DgroupId=com.wyb.dal -DartifactId=union-dal -Dversion=1.0
+mvn archetype:create -DgroupId=com.wyb.deploy -DartifactId=union-deploy -Dversion=1.0 -DarchetypeArtifactId=maven-archetype-webapp
+mvn archetype:create -DgroupId=com.wyb.web -DartifactId=union-web -Dversion=1.0
+</code></pre>
+
+<p>备注：</p>
+
+<p>union-biz-common 业务层，存放常用组件</p>
+
+<p>union-biz-srv     业务层，自己的业务</p>
+
+<p>union-biz-sys    业务层，系统的业务</p>
+
+<p>union-bundle-war 配置文件通常放这里</p>
+
+<p>union-common     存放union常用的工具</p>
+
+<p>union-commontest 测试的基础，所有测试都要依赖这个</p>
+
+<p>union-dal        存放dao</p>
+
+<p>union-deploy     页面和静态文件通常写在这里</p>
+
+<p>union-web        web层，action通常写在这里</p>
+
+<p>其中修改的重点为打包 方式(war/jar)</p>
+
+<p>改为pom形式，这也就意味这这是一个父工程，另外版本号默认是SNAPSHOT意思是快照的意思，就是项目开发中的意思，你要是</p>
+
+<p>看着不爽可以把它删掉，另外需要说明一下dependencyManagement标签，这个标签表示子类可以隐式的继承父pom文件的依赖库，在子</p>
+
+<p>pom中不需要指定版本号，推荐这样，这样可以方便开发，你要修改什么依赖的版本只需要更改父pom就可以了，dependencies是显示继承，你要</p>
+
+<p>是在子pom中声明，就必须写明版本号，不写默认就继承了</p>
+
+<p>3.修改各个pom,添加相关依赖</p>
+
+<p>Java代码</p>
+
+<pre><code>&lt;dependency&gt;
+&lt;groupId&gt;com.wyb.biz.common&lt;/groupId&gt;
+&lt;artifactId&gt;union-biz-common&lt;/artifactId&gt;
+&lt;version&gt;${project.version}&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+<p>4.转换成eclipse项目：</p>
+
+<pre><code>mvn eclipse:clean eclipse:eclipse
+</code></pre>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-07T13:48:00+08:00" pubdate data-updated="true">Apr 7<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/java/'>java</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    悠游的叶
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>

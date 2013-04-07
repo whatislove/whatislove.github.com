@@ -7,7 +7,9 @@
 	<meta name="author" content="悠游的叶">
 
 	
-	<meta name="description" content=" Read on &rarr; Apr 7th, 2013 linux ">
+	<meta name="description" content="1.安装sudo apt-get install subversion 2.创建项目目录（svn版本库） mkdir -p /data/svndata
+svnadmin create /data/svndata/wybsvn wybsvn为项目名称
+svnadmin create XXX( &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -72,6 +74,223 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/04/07/svnfu-wu-qi-zai-ubuntuxia-pei-zhi/">
+		
+			Svn服务器在ubuntu下配置</a>
+	</h2>
+	<div class="entry-content">
+		<p>1.安装sudo apt-get install subversion</p>
+
+<p>2.创建项目目录（svn版本库）</p>
+
+<pre><code>mkdir -p /data/svndata
+svnadmin create /data/svndata/wybsvn  wybsvn为项目名称
+svnadmin create XXX(XXX为带路径的项目名称，如/home/abc/XXX）
+</code></pre>
+
+<p>3.配置svn</p>
+
+<p>在svn 安装目录下(/data/svndata/wybsvn)</p>
+
+<p>可以看到conf文件夹，可针对conf文件夹中的authz、passwd、svnserve.conf进行设 置.</p>
+
+<p>svnserve.conf –  svn服务配置文件，该文件版本库目录的conf目录下。</p>
+
+<p>passwd – 用户名口令文件，该文件名在文件svnserve.conf中指定，缺省为同目录下的。</p>
+
+<p>authz  – 权限配置文件，该文件名也在文件svnserve.conf中指定，缺省为同目录下的。</p>
+
+
+		
+		<a href="/blog/2013/04/07/svnfu-wu-qi-zai-ubuntuxia-pei-zhi/" class="more-link">Read on &rarr;</a>
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-07T13:56:00+08:00" pubdate data-updated="true">Apr 7<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/java/'>java</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/04/07/apache-yu-jboss-de-huan-jing-da-jian/">
+		
+			Apache 与Jboss 的环境搭建</a>
+	</h2>
+	<div class="entry-content">
+		<p>1.首先是环境的安装，需要安装</p>
+
+<p>httpd(也就是apache http server http服务器 罗嗦下：Tomcat应用也算非常广泛的web服务器，支持部分j2ee， 只能做jsp和servlet的container)</p>
+
+<p>jboss (应用服务器)</p>
+
+<p>mod_jk(mod_jk 也叫 JK，这是一款 Apache/IIS 用来连接后台Tomcat的模块，支持集群和负载均衡)</p>
+
+<p>安装 httpd:</p>
+
+<pre><code>wget http://archive.apache.org/dist/httpd/httpd-2.0.61.tar.gz
+tar -zxvf httpd-2.0.61.tar.gz
+</code></pre>
+
+<p>进入httpd-2.0.61,执行安装</p>
+
+<pre><code>$ ./configure –prefix=/usr/alibaba/install/httpd-2.0.61 –enable-rewrite=static –with-mpm=worker –enable-so –enable-proxy –enable-proxy-http –enable-deflate
+$ make
+$ make install
+</code></pre>
+
+
+		
+		<a href="/blog/2013/04/07/apache-yu-jboss-de-huan-jing-da-jian/" class="more-link">Read on &rarr;</a>
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-07T13:51:00+08:00" pubdate data-updated="true">Apr 7<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/java/'>java</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/04/07/mavenchuang-jian-duo-mo-kuai-xiang-mu/">
+		
+			Maven创建多模块项目</a>
+	</h2>
+	<div class="entry-content">
+		<p>1.生成父级工程</p>
+
+<pre><code>mvn archetype:create -DgroupId=com.wyb -DartifactId=union -Dversion=1.0
+</code></pre>
+
+<p>备注：</p>
+
+<p><groupId>:一个项目群的ID,一个项目群可以包含多个项目</p>
+
+<p><artifactId>:一个项目的ID,是每个项目的唯一ID.</p>
+
+<p><version>:描述了项目当前的版本.</p>
+
+<p>打开union目录删除src文件夹，打开pom.xml，将packaging属性修改为pom（表示为父工程）</p>
+
+
+		
+		<a href="/blog/2013/04/07/mavenchuang-jian-duo-mo-kuai-xiang-mu/" class="more-link">Read on &rarr;</a>
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-07T13:48:00+08:00" pubdate data-updated="true">Apr 7<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/java/'>java</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/04/07/eclipse-bao-cuo-java-dot-lang-dot-unsatisfiedlinkerror-could-not-load-swt-library-reasons/">
+		
+			Eclipse 报错java.lang.UnsatisfiedLinkError: Could Not Load SWT Library. Reasons:</a>
+	</h2>
+	<div class="entry-content">
+		<p>引起原因：把jdk目录指定了自己下载的jdk目录。</p>
+
+<p>网上搜索了半天，找到解决方法</p>
+
+
+		
+		<a href="/blog/2013/04/07/eclipse-bao-cuo-java-dot-lang-dot-unsatisfiedlinkerror-could-not-load-swt-library-reasons/" class="more-link">Read on &rarr;</a>
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-07T13:44:00+08:00" pubdate data-updated="true">Apr 7<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/java/'>java</a>
+
+
+</div>
+	
+</div></article>
 
 
     <article class="post">
