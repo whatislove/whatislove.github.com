@@ -4,7 +4,7 @@
   <title><![CDATA[Category: octopress | 悠游的叶的Blog]]></title>
   <link href="http://whatislove.github.com/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://whatislove.github.com/"/>
-  <updated>2013-04-07T12:28:12+08:00</updated>
+  <updated>2013-04-07T12:52:08+08:00</updated>
   <id>http://whatislove.github.com/</id>
   <author>
     <name><![CDATA[悠游的叶]]></name>
@@ -61,6 +61,15 @@ rake preview #本机进行预览http://localhost:4000
 <p>4.配置Octopress</p>
 
 <p>Octopress的配置主要在_config.yml文件中</p>
+
+<p>5.文章编写</p>
+
+<pre><code>rake new_post["title"]
+</code></pre>
+
+<p>该命令将会在source/_posts目录下生成一个名为YYYY-MM-DD-post-title.markdown的文件，编辑该文件即可书写你的文章了。</p>
+
+<p><a href="http://wowubuntu.com/markdown/index.html">markdown语法</a></p>
 ]]></content>
   </entry>
   
