@@ -7,9 +7,7 @@
 	<meta name="author" content="悠游的叶">
 
 	
-	<meta name="description" content="1.安装sudo apt-get install subversion 2.创建项目目录（svn版本库） mkdir -p /data/svndata
-svnadmin create /data/svndata/wybsvn wybsvn为项目名称
-svnadmin create XXX( &hellip;">
+	<meta name="description" content="首先用rake来增加一个需要增加的页面，例如: rake new_page[About] 这是会在source/目录先生产about目录以及index.markdown，如果这样直接generate，是不会把about页面增加到navibar中的，需要在navigation.html中进行设置， &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -76,6 +74,62 @@ svnadmin create XXX( &hellip;">
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/04/08/zhuan-octopress-zeng-jia-navibar/">
+		
+			转-Octopress 增加Navibar</a>
+	</h2>
+	<div class="entry-content">
+		<p>首先用rake来增加一个需要增加的页面，例如:</p>
+
+<pre><code>rake new_page[About]
+</code></pre>
+
+<p>这是会在source/目录先生产about目录以及index.markdown，如果这样直接generate，是不会把about页面增加到navibar中的，需要在navigation.html中进行设置，如果直接在/source/_includes/custom/navigation.html中修改，那么在切换主题时，改修改是不会保存的，需要再次修改，所以最好的方法是在主题文件中修改</p>
+
+<pre><code>.theme/classic/source/_includes/custom/navigation.html
+</code></pre>
+
+<p>修改成</p>
+
+<pre><code>navigation.html
+
+&lt;ul class="main-navigation"&gt;
+  &lt;li&gt;&lt;a href="/"&gt;Blog&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="/blog/archives"&gt;Archives&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="/about"&gt;About&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+
+		
+		<a href="/blog/2013/04/08/zhuan-octopress-zeng-jia-navibar/" class="more-link">Read on &rarr;</a>
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-08T20:06:00+08:00" pubdate data-updated="true">Apr 8<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+</div>
+	
+</div></article>
 
 
     <article class="post">
