@@ -1,0 +1,234 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>samba配置 - 悠游的叶的Blog</title>
+	<meta name="author" content="悠游的叶">
+
+	
+	<meta name="description" content="1) 添加用户：可以省去此步 Samba 访问可以不需要用户，但为了系统安全，建议为每个用户建立独立的samba 访问目录。 这里，我们建立的是普通的Linux用户 #useradd wybsmb
+#passwd wybsmb 2) 修改samba 配置文件 vi /etc/samba/smb. &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="悠游的叶的Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">悠游的叶的Blog</a></h1>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="/blog/about">About</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="/blog/about">About</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:whatislove.github.com">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:whatislove.github.com">
+	</form>
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Samba配置</h2>
+	<div class="entry-content"><p>1)  添加用户：可以省去此步</p>
+
+<p>Samba 访问可以不需要用户，但为了系统安全，建议为每个用户建立独立的samba 访问目录。</p>
+
+<p>这里，我们建立的是普通的Linux用户</p>
+
+<pre><code>#useradd wybsmb
+#passwd  wybsmb
+</code></pre>
+
+<p>2) 修改samba 配置文件</p>
+
+<pre><code>vi /etc/samba/smb.conf 
+</code></pre>
+
+<p>到该文件的末尾，增加如下代码：</p>
+
+<pre><code>[wybsmb] 
+    path = /home/wangyibo/wybtmp
+    valid users = wybsmb
+    writable = yes 
+</code></pre>
+
+<!-- more -->
+
+
+<p>其中，</p>
+
+<p>[wybsmb] 表示samba显示的目录名</p>
+
+<p>Path是Samba 目录的绝对路径，在建立Linux 用户后，该目录是自动生成的。</p>
+
+<p>valid users 是合法用户</p>
+
+<p>writable表示是否可写</p>
+
+<p>如果有多用户需要访问该目录，则validusers配置如下:</p>
+
+<pre><code>valid users=wangyibo,yydy 
+</code></pre>
+
+<p>这里需要注意的是，其他用户可能没有访问该目录的权限，这就需要改变该目录权限，比如</p>
+
+<p>采用</p>
+
+<pre><code>sudo chmod –R 777 /home/wangyibo/wybtmp
+</code></pre>
+
+<p>如果需要所有用户都能访问，则删除valid users = wybsmb的同时，增加:</p>
+
+<pre><code>guest ok = yes 
+</code></pre>
+
+<p>3) 生成smb 密码：可以省去此步</p>
+
+<pre><code>smbpasswd wybsmb
+</code></pre>
+
+<p>注意，如果出现如下问题，说明是没有该用户，请使用 -a 参数，表示增加一个新的samba<br/>
+用户，该用户需要是Linux的用户。</p>
+
+<pre><code>#sudo smbpasswd -a wybsmb
+NewSMBpassword: 
+Retype newSMBpassword: 
+</code></pre>
+
+<p>至此，samba 配置已经完成，可以在window下通过\ip 这种方法来访问Linux</p>
+
+<p>查看Samba服务运行状态：</p>
+
+<pre><code>sudo service smbd status
+</code></pre>
+
+<p>查看samba是否配置成功：</p>
+
+<pre><code>smbclient -L //10.18.216.101 -U wybsmb
+smbclient -L{//服务器地址} -U{用户名}
+</code></pre>
+
+<p>4)samba 维护</p>
+
+<p>重启虚拟机 ：</p>
+
+<pre><code>sudo service smbd restart
+</code></pre>
+
+<p>停止Samba服务：</p>
+
+<pre><code>sudo service smbd stop
+</code></pre>
+
+<p>启动Samba服务：</p>
+
+<pre><code>sudo service smbd start
+</code></pre>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-11T10:39:00+08:00" pubdate data-updated="true">Apr 11<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/linux/'>linux</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    悠游的叶
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>

@@ -7,7 +7,8 @@
 	<meta name="author" content="悠游的叶">
 
 	
-	<meta name="description" content="首先用rake来增加一个需要增加的页面，例如: rake new_page[About] 这是会在source/目录先生产about目录以及index.markdown，如果这样直接generate，是不会把about页面增加到navibar中的，需要在navigation.html中进行设置， &hellip;">
+	<meta name="description" content="1) 添加用户：可以省去此步 Samba 访问可以不需要用户，但为了系统安全，建议为每个用户建立独立的samba 访问目录。 这里，我们建立的是普通的Linux用户 #useradd wybsmb
+#passwd wybsmb 2) 修改samba 配置文件 vi /etc/samba/smb. &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -74,6 +75,68 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/04/11/sambapei-zhi/">
+		
+			Samba配置</a>
+	</h2>
+	<div class="entry-content">
+		<p>1)  添加用户：可以省去此步</p>
+
+<p>Samba 访问可以不需要用户，但为了系统安全，建议为每个用户建立独立的samba 访问目录。</p>
+
+<p>这里，我们建立的是普通的Linux用户</p>
+
+<pre><code>#useradd wybsmb
+#passwd  wybsmb
+</code></pre>
+
+<p>2) 修改samba 配置文件</p>
+
+<pre><code>vi /etc/samba/smb.conf 
+</code></pre>
+
+<p>到该文件的末尾，增加如下代码：</p>
+
+<pre><code>[wybsmb] 
+    path = /home/wangyibo/wybtmp
+    valid users = wybsmb
+    writable = yes 
+</code></pre>
+
+
+		
+		<a href="/blog/2013/04/11/sambapei-zhi/" class="more-link">Read on &rarr;</a>
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-11T10:39:00+08:00" pubdate data-updated="true">Apr 11<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/linux/'>linux</a>
+
+
+</div>
+	
+</div></article>
 
 
     <article class="post">

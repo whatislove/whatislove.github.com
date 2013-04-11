@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | 悠游的叶的Blog]]></title>
   <link href="http://whatislove.github.com/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://whatislove.github.com/"/>
-  <updated>2013-04-09T08:50:16+08:00</updated>
+  <updated>2013-04-11T10:48:17+08:00</updated>
   <id>http://whatislove.github.com/</id>
   <author>
     <name><![CDATA[悠游的叶]]></name>
@@ -12,6 +12,109 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[samba配置]]></title>
+    <link href="http://whatislove.github.com/blog/2013/04/11/sambapei-zhi/"/>
+    <updated>2013-04-11T10:39:00+08:00</updated>
+    <id>http://whatislove.github.com/blog/2013/04/11/sambapei-zhi</id>
+    <content type="html"><![CDATA[<p>1)  添加用户：可以省去此步</p>
+
+<p>Samba 访问可以不需要用户，但为了系统安全，建议为每个用户建立独立的samba 访问目录。</p>
+
+<p>这里，我们建立的是普通的Linux用户</p>
+
+<pre><code>#useradd wybsmb
+#passwd  wybsmb
+</code></pre>
+
+<p>2) 修改samba 配置文件</p>
+
+<pre><code>vi /etc/samba/smb.conf 
+</code></pre>
+
+<p>到该文件的末尾，增加如下代码：</p>
+
+<pre><code>[wybsmb] 
+    path = /home/wangyibo/wybtmp
+    valid users = wybsmb
+    writable = yes 
+</code></pre>
+
+<!-- more -->
+
+
+<p>其中，</p>
+
+<p>[wybsmb] 表示samba显示的目录名</p>
+
+<p>Path是Samba 目录的绝对路径，在建立Linux 用户后，该目录是自动生成的。</p>
+
+<p>valid users 是合法用户</p>
+
+<p>writable表示是否可写</p>
+
+<p>如果有多用户需要访问该目录，则validusers配置如下:</p>
+
+<pre><code>valid users=wangyibo,yydy 
+</code></pre>
+
+<p>这里需要注意的是，其他用户可能没有访问该目录的权限，这就需要改变该目录权限，比如</p>
+
+<p>采用</p>
+
+<pre><code>sudo chmod –R 777 /home/wangyibo/wybtmp
+</code></pre>
+
+<p>如果需要所有用户都能访问，则删除valid users = wybsmb的同时，增加:</p>
+
+<pre><code>guest ok = yes 
+</code></pre>
+
+<p>3) 生成smb 密码：可以省去此步</p>
+
+<pre><code>smbpasswd wybsmb
+</code></pre>
+
+<p>注意，如果出现如下问题，说明是没有该用户，请使用 -a 参数，表示增加一个新的samba<br/>
+用户，该用户需要是Linux的用户。</p>
+
+<pre><code>#sudo smbpasswd -a wybsmb
+NewSMBpassword: 
+Retype newSMBpassword: 
+</code></pre>
+
+<p>至此，samba 配置已经完成，可以在window下通过\ip 这种方法来访问Linux</p>
+
+<p>查看Samba服务运行状态：</p>
+
+<pre><code>sudo service smbd status
+</code></pre>
+
+<p>查看samba是否配置成功：</p>
+
+<pre><code>smbclient -L //10.18.216.101 -U wybsmb
+smbclient -L{//服务器地址} -U{用户名}
+</code></pre>
+
+<p>4)samba 维护</p>
+
+<p>重启虚拟机 ：</p>
+
+<pre><code>sudo service smbd restart
+</code></pre>
+
+<p>停止Samba服务：</p>
+
+<pre><code>sudo service smbd stop
+</code></pre>
+
+<p>启动Samba服务：</p>
+
+<pre><code>sudo service smbd start
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[转-搞懂 linux启动过程]]></title>
