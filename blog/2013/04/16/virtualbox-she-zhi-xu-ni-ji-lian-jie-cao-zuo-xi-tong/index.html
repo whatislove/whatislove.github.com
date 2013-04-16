@@ -1,0 +1,223 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>VirtualBox 设置虚拟机连接操作系统 - 悠游的叶的Blog</title>
+	<meta name="author" content="悠游的叶">
+
+	
+	<meta name="description" content="VirtualBox简易设置文档 一、安装虚拟机 本人创建的虚拟机名称为“winxp”，以下均以此为描述。 二、后台运行虚拟机并通过远程桌面连接 （一）、远程桌面的功能开启 1、首先需要安装虚拟机扩展包“VM VirtualBox Extension Pack”，否则无法链接(从 &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="悠游的叶的Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">悠游的叶的Blog</a></h1>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="/blog/about">About</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="/blog/about">About</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:whatislove.github.com">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:whatislove.github.com">
+	</form>
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">VirtualBox 设置虚拟机连接操作系统</h2>
+	<div class="entry-content"><p>VirtualBox简易设置文档</p>
+
+<p>一、安装虚拟机</p>
+
+<p>本人创建的虚拟机名称为“winxp”，以下均以此为描述。</p>
+
+<p>二、后台运行虚拟机并通过远程桌面连接</p>
+
+<p>（一）、远程桌面的功能开启</p>
+
+<p>1、首先需要安装虚拟机扩展包“VM VirtualBox Extension Pack”，否则无法链接(从 VirtualBox 4.0 开始，VirtualBox 添加了一些像远程桌面连接
+的功能的扩展包。现在因为我们需要远程桌面连接来控制虚拟机，所以还需要安装这个扩展包)，可至官方网站下载各版本对应的扩展包。执行如
+下语句安装（注意把包的名称改成实际下载的包名称）：</p>
+
+<pre><code>sudo VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-4.1.18-78361.vbox-extpack
+</code></pre>
+
+<p>如果是低版本升级为高版本，则加上replace参数：</p>
+
+<!-- more -->
+
+
+<pre><code>sudo VBoxManage extpack install --replace Oracle_VM_VirtualBox_Extension_Pack-4.1.9-75467.vbox-extpack
+</code></pre>
+
+<p>链接：</p>
+
+<pre><code>http://dlc.sun.com.edgesuite.net/virtualbox/4.1.8/
+</code></pre>
+
+<p>2、开启远程桌面(启动不来再执行一遍)</p>
+
+<pre><code>VBoxManage modifyvm winxp --vrde on
+</code></pre>
+
+<p>3、设置远程桌面端口，此处设置为10086(启动不来再执行一遍)：</p>
+
+<pre><code>VBoxManage modifyvm winxp --vrdeport 10086
+</code></pre>
+
+<p>（二）、rdp协议中设置远程桌面的用户名和密码
+1、首先设置校验库为：VBoxAuthSimple（官方网站这样写的，不知道为什么要这样设置？）：</p>
+
+<pre><code>VBoxManage setproperty vrdeauthlibrary "VBoxAuthSimple"
+</code></pre>
+
+<p>2、生成加密后的hash密码：</p>
+
+<pre><code>VBoxManage internalcommands passwordhash "123456"
+#此处生成的hash码为：8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92
+</code></pre>
+
+<p>3、设置虚拟机为外部校验（虚拟机关闭时执行否则报错）：</p>
+
+<pre><code>VBoxManage modifyvm winxp --vrdeauthtype external
+</code></pre>
+
+<p>4、设置用户名和密码，winxp为虚拟机名称，VBoxAuthSimple/users/admin中的admin为用户名（用户名可以自己设置）：</p>
+
+<pre><code>VBoxManage setextradata winxp "VBoxAuthSimple/users/admin" 8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92
+</code></pre>
+
+<p>（三）、命令行管理虚拟机</p>
+
+<p>1、通过如下命令行启动虚拟机，使虚拟机在后台运行</p>
+
+<pre><code>VBoxManage startvm winxp --type headless
+</code></pre>
+
+<p>2、关闭虚拟机</p>
+
+<pre><code>VBoxManage controlvm winxp acpipowerbutton
+</code></pre>
+
+<p>3、查看虚拟机正在运行的虚拟机</p>
+
+<pre><code>VBoxManage list runningvms
+</code></pre>
+
+<p>（四）、通过rdesktop程序连接本机的后台虚拟机，运行前确认安装了rdesktop程序，如果没有安装，首先安装。</p>
+
+<pre><code>rdesktop -u admin -p 123456 10.19.14.56:10086
+</code></pre>
+
+<p>特别注意：VBoxManage命令可以实现很多界面里无法实现的操作，如果需要深入挖掘相关功能，还需要命令行的操作。</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-16T16:47:00+08:00" pubdate data-updated="true">Apr 16<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/linux/'>linux</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    悠游的叶
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>

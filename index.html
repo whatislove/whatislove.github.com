@@ -7,8 +7,7 @@
 	<meta name="author" content="悠游的叶">
 
 	
-	<meta name="description" content="1) 添加用户：可以省去此步 Samba 访问可以不需要用户，但为了系统安全，建议为每个用户建立独立的samba 访问目录。 这里，我们建立的是普通的Linux用户 #useradd wybsmb
-#passwd wybsmb 2) 修改samba 配置文件 vi /etc/samba/smb. &hellip;">
+	<meta name="description" content="VirtualBox简易设置文档 一、安装虚拟机 本人创建的虚拟机名称为“winxp”，以下均以此为描述。 二、后台运行虚拟机并通过远程桌面连接 （一）、远程桌面的功能开启 1、首先需要安装虚拟机扩展包“VM VirtualBox Extension Pack”，否则无法链接(从 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -75,6 +74,64 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/04/16/virtualbox-she-zhi-xu-ni-ji-lian-jie-cao-zuo-xi-tong/">
+		
+			VirtualBox 设置虚拟机连接操作系统</a>
+	</h2>
+	<div class="entry-content">
+		<p>VirtualBox简易设置文档</p>
+
+<p>一、安装虚拟机</p>
+
+<p>本人创建的虚拟机名称为“winxp”，以下均以此为描述。</p>
+
+<p>二、后台运行虚拟机并通过远程桌面连接</p>
+
+<p>（一）、远程桌面的功能开启</p>
+
+<p>1、首先需要安装虚拟机扩展包“VM VirtualBox Extension Pack”，否则无法链接(从 VirtualBox 4.0 开始，VirtualBox 添加了一些像远程桌面连接
+的功能的扩展包。现在因为我们需要远程桌面连接来控制虚拟机，所以还需要安装这个扩展包)，可至官方网站下载各版本对应的扩展包。执行如
+下语句安装（注意把包的名称改成实际下载的包名称）：</p>
+
+<pre><code>sudo VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-4.1.18-78361.vbox-extpack
+</code></pre>
+
+<p>如果是低版本升级为高版本，则加上replace参数：</p>
+
+
+		
+		<a href="/blog/2013/04/16/virtualbox-she-zhi-xu-ni-ji-lian-jie-cao-zuo-xi-tong/" class="more-link">Read on &rarr;</a>
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-16T16:47:00+08:00" pubdate data-updated="true">Apr 16<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/linux/'>linux</a>
+
+
+</div>
+	
+</div></article>
 
 
     <article class="post">
@@ -564,68 +621,10 @@ $ rake generate
 	
 </div></article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2013/04/07/octopress-jian-yi-pei-zhi/">
-		
-			Octopress 简易配置</a>
-	</h2>
-	<div class="entry-content">
-		<p>1.安装Ruby</p>
-
-<pre><code>curl -L https://get.rvm.io | bash -s stable --ruby
-Install Ruby 1.9.3
-rvm install 1.9.3
-rvm use 1.9.3
-rvm rubygems latest
-</code></pre>
-
-<p>如果出现红色缺少的类库，请sudo apt-get install 安装</p>
-
-<p>2.设置 Octopress</p>
-
-<pre><code>git clone git://github.com/imathis/octopress.git octopress
-cd octopress
-ruby --version  # Should report Ruby 1.9.3
-gem install bundler
-bundle install
-rake install  #Install the default Octopress theme
-</code></pre>
-
-
-		
-		<a href="/blog/2013/04/07/octopress-jian-yi-pei-zhi/" class="more-link">Read on &rarr;</a>
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-07T12:03:00+08:00" pubdate data-updated="true">Apr 7<span>th</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/octopress/'>octopress</a>
-
-
-</div>
-	
-</div></article>
-
 <nav id="pagenavi">
     
+    
+        <a href="/blog/page/2/" class="next">Next</a>
     
     <div class="center"><a href="/blog/archives">Blog Archives</a></div>
 </nav></div>
