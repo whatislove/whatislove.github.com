@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: efficiency | 悠游的叶的Blog]]></title>
+  <link href="http://whatislove.github.com/blog/categories/efficiency/atom.xml" rel="self"/>
+  <link href="http://whatislove.github.com/"/>
+  <updated>2013-04-16T17:12:50+08:00</updated>
+  <id>http://whatislove.github.com/</id>
+  <author>
+    <name><![CDATA[悠游的叶]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[番茄工作法介绍]]></title>
+    <link href="http://whatislove.github.com/blog/2013/04/16/fan-qie-gong-zuo-fa-jie-shao/"/>
+    <updated>2013-04-16T17:08:00+08:00</updated>
+    <id>http://whatislove.github.com/blog/2013/04/16/fan-qie-gong-zuo-fa-jie-shao</id>
+    <content type="html"><![CDATA[<p>番茄工作法的简单的介绍，详细看番茄工作法这本书</p>
+
+<!-- more -->
+
+
+<p><img src="/images/own/%E7%95%AA%E8%8C%84%E5%B7%A5%E4%BD%9C%E6%B3%95.jpg" title="番茄工作法" alt="番茄工作法" /></p>
+
+<p>也可以下载这个文档</p>
+
+<pre><code>http://ishare.iask.sina.com.cn/f/20702660.html
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>
